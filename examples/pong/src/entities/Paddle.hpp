@@ -8,7 +8,7 @@ protected:
     sf::IntRect m_Field;
     sf::RectangleShape m_Shape;
     short m_Direction = 0;
-    const int SPEED = 300;
+    const int SPEED = 200;
 
 public:
     Paddle(sf::Vector2f rectSize, sf::IntRect field) : m_Shape(rectSize), m_Field(field)

@@ -5,6 +5,10 @@ Ball::Ball(int radius, sf::IntRect m_Field) : m_Shape(radius), m_Field(m_Field)
     m_Shape.setOrigin(radius, radius);
     m_Shape.setPosition(m_Field.width / 2, m_Field.height / 2);
 }
+sf::Vector2f Ball::getDirection() const
+{
+    return m_Direction;
+}
 
 sf::Vector2f Ball::getPosition() const
 {
@@ -23,8 +27,10 @@ bool Ball::intersect(const Entity &other)
 
 void Ball::paddleHit()
 {
+    auto pos = getPosition();
+    m_Direction.y = (rng.chance(50) ? -1 : 1) * m_Direction.y;
     m_Direction.x = -1 * m_Direction.x;
-    m_Direction.y = (rng.chance(70) ? -1 : 1) * m_Direction.y;
+    m_Shape.setPosition(pos.x + (m_Direction.x * 30), pos.y);
 }
 
 void Ball::reset()
