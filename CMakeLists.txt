@@ -37,6 +37,7 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(PONG_EXAMPLE_SOURCES 
   examples/pong/src/main.cpp
+  examples/pong/src/libs/Randomizer.cpp
   examples/pong/src/scenes/Main.cpp
   examples/pong/src/scenes/Splash.cpp
   examples/pong/src/Pong.cpp
