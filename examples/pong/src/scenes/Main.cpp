@@ -1,11 +1,11 @@
 #include "Main.hpp"
+#include "../entities/Ball.hpp"
+#include "../entities/PlayerPaddle.hpp"
 
 #include "yoku/Assets.hpp"
 #include <iostream>
 
-const int BALL_SPEED = 300;
 const int BALL_SIZE = 10;
-const int PADDLE_SPEED = 300;
 const sf::IntRect PADDLE_SIZE = {0, 0, 10, 80};
 
 void Main::onCreate()
@@ -23,17 +23,14 @@ void Main::onCreate()
     m_CpuScoreTxt.setPosition(m_Field.width - 40, 0);
 
     auto paddleShape = sf::Vector2f(PADDLE_SIZE.width, PADDLE_SIZE.height);
-    m_PlayerPaddle = std::make_unique<sf::RectangleShape>(paddleShape);
-    m_PlayerPaddle->setOrigin(PADDLE_SIZE.width / 2, PADDLE_SIZE.height / 2);
-    m_PlayerPaddle->setPosition(30, m_Field.height / 2);
 
-    m_CpuPaddle = std::make_unique<sf::RectangleShape>(paddleShape);
-    m_CpuPaddle->setOrigin(PADDLE_SIZE.width / 2, PADDLE_SIZE.height / 2);
-    m_CpuPaddle->setPosition(m_Field.width - 50, m_Field.height / 2);
+    m_Ball = std::make_shared<Ball>(BALL_SIZE, m_Field);
+    m_PlayerPaddle = std::make_shared<PlayerPaddle>(paddleShape, m_Field);
+    m_CpuPaddle = std::make_unique<CpuPaddle>(paddleShape, m_Field, m_Ball);
 
-    m_Ball = std::make_unique<sf::CircleShape>(BALL_SIZE);
-    m_Ball->setOrigin(BALL_SIZE, BALL_SIZE);
-    m_Ball->setPosition(m_Field.width / 2, m_Field.height / 2);
+    m_Entities[0] = m_Ball;
+    m_Entities[1] = m_PlayerPaddle;
+    m_Entities[2] = m_CpuPaddle;
 }
 
 void Main::onDestroy()
@@ -42,73 +39,51 @@ void Main::onDestroy()
 
 void Main::processInput(sf::Event &event)
 {
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    for (auto &e : m_Entities)
     {
-        m_PlayerDirection = -1;
-        return;
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        m_PlayerDirection = 1;
-        return;
+        if (e == nullptr)
+            continue;
+        e->processInput();
     }
 }
 
 void Main::update(float dt)
 {
-    if (m_PlayerDirection != 0)
+    for (auto &e : m_Entities)
     {
-        auto pos = m_PlayerPaddle->getPosition();
-        m_PlayerPaddle->setPosition(pos.x, pos.y + (m_PlayerDirection * PADDLE_SPEED * dt));
+        if (e == nullptr)
+            continue;
+        e->update(dt);
     }
 
-    auto initialPos = m_Ball->getPosition();
-    m_Ball->setPosition(initialPos.x + (m_BallDirection.x * 100 * dt), initialPos.y + (m_BallDirection.y * BALL_SPEED * dt));
-
-    // calculating CPU movement
-    auto cpuPos = m_CpuPaddle->getPosition();
-    // only if it is in his own field
-    if (cpuPos.y != initialPos.y && initialPos.x > (m_Field.width / 2))
+    if (m_Ball->intersect(*m_PlayerPaddle) || m_Ball->intersect(*m_CpuPaddle))
     {
-        auto cpuDir = cpuPos.y < initialPos.y ? 1 : -1;
-        m_CpuPaddle->setPosition(cpuPos.x, cpuPos.y + (cpuDir * PADDLE_SPEED * dt));
-    }
-
-    if (m_Ball->getGlobalBounds().intersects(m_PlayerPaddle->getGlobalBounds()) || m_Ball->getGlobalBounds().intersects(m_CpuPaddle->getGlobalBounds()))
-    {
-        m_BallDirection.x = -1 * m_BallDirection.x;
-        m_BallDirection.y = (rng.chance(70) ? -1 : 1) * m_BallDirection.y;
+        m_Ball->paddleHit();
     }
 
     auto updatedPos = m_Ball->getPosition();
-
-    if (updatedPos.y >= m_Field.height || updatedPos.y <= 0)
-    {
-        m_BallDirection.y = -1 * m_BallDirection.y;
-    }
-
     if (updatedPos.x >= m_Field.width)
     {
         m_PlayerScore += 1;
         m_PlayerScoreTxt.setString(std::to_string(m_PlayerScore));
-        m_Ball->setPosition(m_Field.width / 2, m_Field.height / 2);
+        m_Ball->reset();
     }
     if (updatedPos.x <= 0)
     {
         m_CpuScore += 1;
         m_CpuScoreTxt.setString(std::to_string(m_CpuScore));
-        m_Ball->setPosition(m_Field.width / 2, m_Field.height / 2);
+        m_Ball->reset();
     }
-
-    m_PlayerDirection = 0;
 }
+
 void Main::draw(yoku::Window &window)
 {
-    window.draw(*m_Ball);
-    window.draw(*m_CpuPaddle);
-    window.draw(*m_PlayerPaddle);
+    for (auto &e : m_Entities)
+    {
+        if (e == nullptr)
+            continue;
+        e->draw(window);
+    }
     window.draw(m_CpuScoreTxt);
     window.draw(m_PlayerScoreTxt);
 }
