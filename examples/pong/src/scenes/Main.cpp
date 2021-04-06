@@ -67,7 +67,16 @@ void Main::update(float dt)
     auto initialPos = m_Ball->getPosition();
     m_Ball->setPosition(initialPos.x + (m_BallDirection.x * 100 * dt), initialPos.y + (m_BallDirection.y * BALL_SPEED * dt));
 
-    if (m_Ball->getGlobalBounds().intersects(m_PlayerPaddle->getGlobalBounds()))
+    // calculating CPU movement
+    auto cpuPos = m_CpuPaddle->getPosition();
+    // only if it is in his own field
+    if (cpuPos.y != initialPos.y && initialPos.x > (m_Field.width / 2))
+    {
+        auto cpuDir = cpuPos.y < initialPos.y ? 1 : -1;
+        m_CpuPaddle->setPosition(cpuPos.x, cpuPos.y + (cpuDir * PADDLE_SPEED * dt));
+    }
+
+    if (m_Ball->getGlobalBounds().intersects(m_PlayerPaddle->getGlobalBounds()) || m_Ball->getGlobalBounds().intersects(m_CpuPaddle->getGlobalBounds()))
     {
         m_BallDirection.x = -1 * m_BallDirection.x;
         m_BallDirection.y = (rng.chance(70) ? -1 : 1) * m_BallDirection.y;
