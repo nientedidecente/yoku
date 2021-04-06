@@ -83,13 +83,23 @@ void Main::update(float dt)
     }
 
     auto updatedPos = m_Ball->getPosition();
-    if (updatedPos.x >= m_Field.width || updatedPos.x <= 0)
-    {
-        m_BallDirection.x = -1 * m_BallDirection.x;
-    }
+
     if (updatedPos.y >= m_Field.height || updatedPos.y <= 0)
     {
         m_BallDirection.y = -1 * m_BallDirection.y;
+    }
+
+    if (updatedPos.x >= m_Field.width)
+    {
+        m_PlayerScore += 1;
+        m_PlayerScoreTxt.setString(std::to_string(m_PlayerScore));
+        m_Ball->setPosition(m_Field.width / 2, m_Field.height / 2);
+    }
+    if (updatedPos.x <= 0)
+    {
+        m_CpuScore += 1;
+        m_CpuScoreTxt.setString(std::to_string(m_CpuScore));
+        m_Ball->setPosition(m_Field.width / 2, m_Field.height / 2);
     }
 
     m_PlayerDirection = 0;
