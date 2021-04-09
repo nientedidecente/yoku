@@ -12,7 +12,8 @@ private:
     sf::IntRect m_Field;
     Randomizer rng;
     sf::Vector2f m_Direction = {1, -1};
-    const int SPEED = 200;
+    int m_CurrentSpeed = 200;
+    const int SPEED_INCREASE = 20;
 
 public:
     Ball(int radius, sf::IntRect m_Field);
