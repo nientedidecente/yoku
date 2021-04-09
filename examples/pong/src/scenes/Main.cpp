@@ -2,7 +2,7 @@
 #include "../entities/Ball.hpp"
 #include "../entities/PlayerPaddle.hpp"
 
-#include "yoku/Assets.hpp"
+#include "Assets.hpp"
 #include <iostream>
 
 const int BALL_SIZE = 10;

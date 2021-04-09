@@ -5,7 +5,7 @@
 #include "../entities/CpuPaddle.hpp"
 
 #include <SFML/Graphics.hpp>
-#include "yoku/Scene.hpp"
+#include "Scene.hpp"
 #include <memory>
 #include <array>
 #include <random>

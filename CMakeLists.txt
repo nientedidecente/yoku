@@ -12,17 +12,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 # the -I flag in compiler
 include_directories(
-  ${PROJECT_SOURCE_DIR}/include/
+  ${PROJECT_SOURCE_DIR}/src/include/
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib") 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 set(YOKU_LIB_SOURCES 
-  include/yoku/Assets.cpp
-  include/yoku/SceneManager.cpp
-  include/yoku/Window.cpp
-  include/yoku/Game.cpp
+  src/Assets.cpp
+  src/SceneManager.cpp
+  src/Window.cpp
+  src/Game.cpp
 )
 set(YOKU_LIBRARY_NAME yoku)
 add_library(${YOKU_LIBRARY_NAME} STATIC SHARED ${YOKU_LIB_SOURCES})

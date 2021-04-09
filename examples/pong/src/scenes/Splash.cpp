@@ -1,6 +1,6 @@
 #include "Splash.hpp"
 
-#include "yoku/Assets.hpp"
+#include "Assets.hpp"
 
 void Splash::onDestroy() {}
 void Splash::onCreate()

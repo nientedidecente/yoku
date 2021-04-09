@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "yoku/Scene.hpp"
-#include "yoku/SceneManager.hpp"
+#include "Scene.hpp"
+#include "SceneManager.hpp"
 
 class Splash : public yoku::Scene
 {

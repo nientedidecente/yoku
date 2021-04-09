@@ -1,6 +1,6 @@
 #pragma once
 
-#include "yoku/Window.hpp"
+#include "Window.hpp"
 
 #include <SFML/Graphics.hpp>
 

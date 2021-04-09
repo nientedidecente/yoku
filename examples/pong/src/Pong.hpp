@@ -1,6 +1,6 @@
 #pragma once
 
-#include "yoku/Game.hpp"
+#include "Game.hpp"
 
 class Pong : public yoku::Game
 {
