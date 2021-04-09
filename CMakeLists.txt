@@ -23,9 +23,11 @@ set(YOKU_LIB_SOURCES
   src/SceneManager.cpp
   src/Window.cpp
   src/Game.cpp
-)
-set(YOKU_LIBRARY_NAME yoku)
-add_library(${YOKU_LIBRARY_NAME} STATIC SHARED ${YOKU_LIB_SOURCES})
+  )
+  set(YOKU_LIBRARY_NAME yoku)
+  add_library(${YOKU_LIBRARY_NAME}.static STATIC ${YOKU_LIB_SOURCES})
+  add_library(${YOKU_LIBRARY_NAME} SHARED ${YOKU_LIB_SOURCES})
+  file(COPY src/include DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 #add_compile_definitions(FPS=1)
 message("Build Type: " ${CMAKE_BUILD_TYPE})
@@ -48,4 +50,4 @@ set(PONG_EXAMPLE_SOURCES
 )
 file(COPY examples/pong/src/assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 add_executable(pong ${PONG_EXAMPLE_SOURCES})
-target_link_libraries(pong sfml-audio sfml-graphics sfml-window sfml-system ${YOKU_LIBRARY_NAME})
+target_link_libraries(pong sfml-graphics sfml-window ${YOKU_LIBRARY_NAME})
