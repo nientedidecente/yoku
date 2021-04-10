@@ -56,9 +56,16 @@ void Main::update(float dt)
         e->update(dt);
     }
 
-    if (m_Ball->intersect(*m_PlayerPaddle) || m_Ball->intersect(*m_CpuPaddle))
+    if (m_Ball->intersect(*m_PlayerPaddle))
     {
-        m_Ball->paddleHit();
+        auto hitY = m_PlayerPaddle->getPosition().y;
+        m_Ball->paddleHit(hitY);
+    }
+
+    if (m_Ball->intersect(*m_CpuPaddle))
+    {
+        auto hitY = m_CpuPaddle->getPosition().y;
+        m_Ball->paddleHit(hitY);
     }
 
     auto updatedPos = m_Ball->getPosition();

@@ -26,6 +26,6 @@ public:
     void update(float dt) override;
     void draw(yoku::Window &window) override;
 
-    void paddleHit();
+    void paddleHit(float hitY);
     void reset();
 };
