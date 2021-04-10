@@ -1,6 +1,7 @@
 #include "SceneManager.hpp"
 
 #include <memory>
+#include <iostream>
 namespace yoku
 {
 
@@ -30,6 +31,7 @@ namespace yoku
         auto found = m_Scenes.find(sceneName);
         if (found == m_Scenes.end())
         {
+            std::cout << "[SCENE_MANAGER] scene: " << sceneName << " not found.\n";
             return;
         }
 
