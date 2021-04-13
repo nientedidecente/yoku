@@ -30,7 +30,7 @@ public:
         : Scene("main"), m_Field(0, 0, width, height) {}
     void onCreate() override;
     void onDestroy() override;
-    void processInput(sf::Event &event) override;
+    void processInput() override;
     void update(float dt) override;
     void draw(yoku::Window &window) override;
 };

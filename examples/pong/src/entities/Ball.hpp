@@ -11,7 +11,7 @@ private:
     sf::CircleShape m_Shape;
     sf::IntRect m_Field;
     Randomizer rng;
-    sf::Vector2f m_Direction = {1, -1};
+    sf::Vector2f m_Direction = {-1, -1};
     int m_CurrentSpeed = 200;
     const int SPEED_INCREASE = 20;
 

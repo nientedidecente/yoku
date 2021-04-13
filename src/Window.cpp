@@ -8,6 +8,11 @@ namespace yoku
         m_Renderer.setVerticalSyncEnabled(true);
     }
 
+    void Window::setView(sf::View &view)
+    {
+        m_Renderer.setView(view);
+    }
+
     sf::RenderWindow &Window::getRenderer()
     {
         return m_Renderer;

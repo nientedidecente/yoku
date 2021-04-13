@@ -20,7 +20,8 @@ namespace yoku
 
             if (scene != nullptr)
             {
-                scene->processInput(event);
+                scene->processEvent(event);
+                scene->processInput();
                 scene->update(dt);
                 m_Window.startDraw();
                 scene->draw(m_Window);

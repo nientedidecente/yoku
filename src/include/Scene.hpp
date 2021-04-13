@@ -23,7 +23,8 @@ namespace yoku
         virtual void onActivate() { isActive = true; };
         virtual void onDeactivate() { isActive = false; };
 
-        virtual void processInput(sf::Event &event){};
+        virtual void processEvent(sf::Event &event){};
+        virtual void processInput(){};
         virtual void update(float dt){};
         virtual void draw(Window &window){};
     };

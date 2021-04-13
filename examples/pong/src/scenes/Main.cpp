@@ -37,7 +37,7 @@ void Main::onDestroy()
 {
 }
 
-void Main::processInput(sf::Event &event)
+void Main::processInput()
 {
     for (auto &e : m_Entities)
     {

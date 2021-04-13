@@ -15,6 +15,7 @@ namespace yoku
     public:
         Window(const std::string &title, int width, int height, sf::Uint32 style);
         bool isOpen();
+        void setView(sf::View& view);
         void setBgColour(sf::Color color) { m_BgColor = color; }
         int getWidth() { return m_Width; }
         int getHeight() { return m_Height; }
