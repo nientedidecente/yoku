@@ -47,13 +47,15 @@ set(PONG_EXAMPLE_SOURCES
   examples/pong/src/scenes/Main.cpp
   examples/pong/src/scenes/Splash.cpp
   examples/pong/src/Pong.cpp
-)
-file(COPY examples/pong/src/assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-add_executable(pong ${PONG_EXAMPLE_SOURCES})
-target_link_libraries(pong sfml-graphics sfml-window ${YOKU_LIBRARY_NAME})
-
-set(SIMULATION_EXAMPLE_SOURCES 
+  )
+  file(COPY examples/pong/src/assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+  add_executable(pong ${PONG_EXAMPLE_SOURCES})
+  target_link_libraries(pong sfml-graphics sfml-window ${YOKU_LIBRARY_NAME})
+  
+  set(SIMULATION_EXAMPLE_SOURCES 
   examples/simulation/src/main.cpp
+  examples/simulation/src/entities/Cell.cpp
+  examples/simulation/src/scenes/Main.cpp
   examples/simulation/src/scenes/Splash.cpp
   examples/simulation/src/Simulation.cpp
 )
