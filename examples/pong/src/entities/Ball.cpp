@@ -2,8 +2,8 @@
 
 Ball::Ball(int radius, sf::IntRect m_Field) : m_Shape(radius), m_Field(m_Field)
 {
-    auto a = rng.chance(50) ? -1 : 1;
-    auto b = -1 * a;
+    auto a = rng.chance(0.5f) ? 1 : -1;
+    auto b = (rng.chance(0.5f) ? -1 : 1) * a;
     m_Shape.setOrigin(radius, radius);
     m_Shape.setPosition(m_Field.width / 2, m_Field.height / 2);
 }
@@ -29,17 +29,29 @@ bool Ball::intersect(const Entity &other)
 
 void Ball::paddleHit(float hitY)
 {
+    m_Direction.x = -1 * m_Direction.x;
+    if (rng.chance(.2))
+    {
+        m_Shape.setFillColor(sf::Color::Red);
+        m_Direction.y = 0;
+        m_CurrentSpeed += (SPEED_INCREASE * 2.f);
+        return;
+    }
+
+    m_Shape.setFillColor(sf::Color::White);
     auto pos = getPosition();
     m_Direction.y = (hitY >= pos.y ? -1 : 1);
-    m_Direction.x = -1 * m_Direction.x;
     m_Shape.setPosition(pos.x + (m_Direction.x * 30), pos.y);
     m_CurrentSpeed += SPEED_INCREASE;
 }
 
 void Ball::reset()
 {
+    m_Shape.setFillColor(sf::Color::White);
     m_Shape.setPosition(m_Field.width / 2, m_Field.height / 2);
-    m_Direction = rng.chance(50) ? sf::Vector2f{1, -1} : sf::Vector2f{-1, 1};
+    m_Direction = rng.chance(0.5f) ? sf::Vector2f{1, -1} : sf::Vector2f{-1, 1};
+    if (rng.chance(.5f))
+        m_Direction = rng.chance(0.5f) ? sf::Vector2f{1, 1} : sf::Vector2f{-1, -1};
 }
 
 void Ball::update(float dt)

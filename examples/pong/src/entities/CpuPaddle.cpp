@@ -3,7 +3,7 @@
 CpuPaddle::CpuPaddle(sf::Vector2f rectSize, sf::IntRect field, std::shared_ptr<Ball> ball)
     : Paddle(rectSize, field), m_Ball(ball)
 {
-    m_Shape.setPosition(m_Field.width - 50, m_Field.height / 2);
+    m_Shape.setPosition(m_Field.width - 40, m_Field.height / 2);
 }
 
 void CpuPaddle::processInput()

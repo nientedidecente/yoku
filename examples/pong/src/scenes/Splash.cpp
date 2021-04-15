@@ -10,16 +10,16 @@ void Splash::onCreate()
     m_Title.setString("PONG");
     m_Title.setCharacterSize(30);
     m_Title.setOrigin(m_Title.getLocalBounds().width / 2, m_Title.getLocalBounds().height / 2);
-    m_Title.setPosition(400, 200);
+    m_Title.setPosition(m_width / 2, m_height / 2 - 150);
 
     m_Instruction.setFont(*font);
     m_Instruction.setString("press [ENTER] to start");
     m_Instruction.setCharacterSize(20);
     m_Instruction.setOrigin(m_Instruction.getLocalBounds().width / 2, m_Instruction.getLocalBounds().height / 2);
-    m_Instruction.setPosition(400, 300);
+    m_Instruction.setPosition(m_width / 2, (m_height / 2));
 }
 
-void Splash::processEvent(sf::Event& event)
+void Splash::processEvent(sf::Event &event)
 {
     if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter)
     {
