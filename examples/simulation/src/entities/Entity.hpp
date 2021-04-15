@@ -8,4 +8,5 @@ class Entity
 public:
     virtual sf::Drawable &getDrawable() const = 0;
     virtual void update(float dt) = 0;
+    virtual bool isActive() = 0;
 };

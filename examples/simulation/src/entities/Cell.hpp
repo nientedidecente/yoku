@@ -28,6 +28,11 @@ public:
     Cell(sf::Vector2i pos, sf::IntRect &field);
     ~Cell();
 
+    bool isActive() override
+    {
+        return !m_isDead;
+    }
+
     sf::Drawable &getDrawable() const override
     {
         return *m_shape;

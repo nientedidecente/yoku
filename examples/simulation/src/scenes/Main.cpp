@@ -35,9 +35,19 @@ void Main::processInput()
 
 void Main::update(float dt)
 {
-    for (auto &e : m_entities)
+    auto it = m_entities.begin();
+    while (it != m_entities.end())
     {
-        e->update(dt);
+        auto &entity = *it;
+        entity->update(dt);
+
+        if (!entity->isActive())
+        {
+            it = m_entities.erase(it);
+            continue;
+        }
+
+        it++;
     }
 }
 
