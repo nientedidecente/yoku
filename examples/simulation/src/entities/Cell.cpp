@@ -1,6 +1,6 @@
 #include "Cell.hpp"
 
-#include "rand.h"
+#include "rng.hpp"
 
 #include <iostream>
 
@@ -39,8 +39,8 @@ void Cell::update(float dt)
 
         if (isInside)
         {
-            m_direction = rng::chance(0.5f) ? sf::Vector2i(1, 1) : sf::Vector2i(1, -1);
-            m_direction = rng::chance(0.5f) ? sf::Vector2i(-1, -1) : sf::Vector2i(-1, 1);
+            m_direction = yoku::rng::chance(0.5f) ? sf::Vector2i(1, 1) : sf::Vector2i(1, -1);
+            m_direction = yoku::rng::chance(0.5f) ? sf::Vector2i(-1, -1) : sf::Vector2i(-1, 1);
         }
         m_lastDecisionTimeout = 0;
     }
@@ -69,9 +69,9 @@ void Cell::update(float dt)
     {
         std::cout << "Changing direction\n";
         m_directionTimeout = 0;
-        if (rng::chance(0.5f))
+        if (yoku::rng::chance(0.5f))
             m_direction.x *= -1;
-        if (rng::chance(0.5f))
+        else
             m_direction.y *= -1;
 
         m_shape->setPosition(pos.x + (m_speed * m_direction.x * dt), pos.y + (m_speed * m_direction.y * dt));

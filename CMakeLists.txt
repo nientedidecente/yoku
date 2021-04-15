@@ -23,6 +23,7 @@ set(YOKU_LIB_SOURCES
   src/SceneManager.cpp
   src/Window.cpp
   src/Game.cpp
+  src/rng.cpp
   )
   set(YOKU_LIBRARY_NAME yoku)
   add_library(${YOKU_LIBRARY_NAME}.static STATIC ${YOKU_LIB_SOURCES})
@@ -43,7 +44,6 @@ set(PONG_EXAMPLE_SOURCES
   examples/pong/src/entities/CpuPaddle.cpp
   examples/pong/src/entities/Ball.cpp
   examples/pong/src/entities/Paddle.cpp
-  examples/pong/src/libs/Randomizer.cpp
   examples/pong/src/scenes/Main.cpp
   examples/pong/src/scenes/Splash.cpp
   examples/pong/src/Pong.cpp

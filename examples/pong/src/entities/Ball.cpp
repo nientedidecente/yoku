@@ -1,9 +1,11 @@
 #include "Ball.hpp"
 
+#include "rng.hpp"
+
 Ball::Ball(int radius, sf::IntRect m_Field) : m_Shape(radius), m_Field(m_Field)
 {
-    auto a = rng.chance(0.5f) ? 1 : -1;
-    auto b = (rng.chance(0.5f) ? -1 : 1) * a;
+    auto a = yoku::rng::chance(0.5f) ? 1 : -1;
+    auto b = (yoku::rng::chance(0.5f) ? -1 : 1) * a;
     m_Shape.setOrigin(radius, radius);
     m_Shape.setPosition(m_Field.width / 2, m_Field.height / 2);
 }
@@ -30,7 +32,7 @@ bool Ball::intersect(const Entity &other)
 void Ball::paddleHit(float hitY)
 {
     m_Direction.x = -1 * m_Direction.x;
-    if (rng.chance(.2))
+    if (yoku::rng::chance(.2f))
     {
         m_Shape.setFillColor(sf::Color::Red);
         m_Direction.y = 0;
@@ -49,9 +51,9 @@ void Ball::reset()
 {
     m_Shape.setFillColor(sf::Color::White);
     m_Shape.setPosition(m_Field.width / 2, m_Field.height / 2);
-    m_Direction = rng.chance(0.5f) ? sf::Vector2f{1, -1} : sf::Vector2f{-1, 1};
-    if (rng.chance(.5f))
-        m_Direction = rng.chance(0.5f) ? sf::Vector2f{1, 1} : sf::Vector2f{-1, -1};
+    m_Direction = yoku::rng::chance(0.5f) ? sf::Vector2f{1, -1} : sf::Vector2f{-1, 1};
+    if (yoku::rng::chance(.5f))
+        m_Direction = yoku::rng::chance(0.5f) ? sf::Vector2f{1, 1} : sf::Vector2f{-1, -1};
 }
 
 void Ball::update(float dt)
