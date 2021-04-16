@@ -12,7 +12,7 @@ class Quadtree
 {
 private:
     bool m_split = false;
-    bool m_maxElements = false;
+    int m_maxElements = 2;
     sf::FloatRect m_boundaries;
     std::array<std::unique_ptr<Quadtree>, 4> m_subquads = {nullptr, nullptr, nullptr, nullptr};
     std::vector<std::shared_ptr<Entity>> m_entities;
