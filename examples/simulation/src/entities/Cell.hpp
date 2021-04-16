@@ -28,15 +28,11 @@ public:
     Cell(sf::Vector2i pos, sf::IntRect &field);
     ~Cell();
 
-    bool isActive() override
-    {
-        return !m_isDead;
-    }
+    sf::Vector2f getPosition() const override { return m_shape->getPosition(); }
+    sf::FloatRect getBounds() const override { return m_shape->getGlobalBounds(); }
 
-    sf::Drawable &getDrawable() const override
-    {
-        return *m_shape;
-    }
+    bool isActive() const override { return !m_isDead; }
+    sf::Drawable &getDrawable() const override { return *m_shape; }
 
     void update(float dt) override;
 };

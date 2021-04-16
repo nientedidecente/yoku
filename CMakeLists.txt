@@ -54,6 +54,7 @@ set(PONG_EXAMPLE_SOURCES
   
   set(SIMULATION_EXAMPLE_SOURCES 
   examples/simulation/src/main.cpp
+  examples/simulation/src/libs/Quadtree.cpp
   examples/simulation/src/entities/Cell.cpp
   examples/simulation/src/scenes/Main.cpp
   examples/simulation/src/scenes/Splash.cpp

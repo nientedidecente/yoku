@@ -21,6 +21,9 @@ Cell::~Cell()
 
 void Cell::update(float dt)
 {
+    //testing
+    return;
+
     if (m_isDead)
         return;
 

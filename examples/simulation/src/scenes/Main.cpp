@@ -35,6 +35,8 @@ void Main::processInput()
 
 void Main::update(float dt)
 {
+    m_quadtree = std::make_unique<Quadtree>(4, sf::FloatRect(0, 0, m_field.width, m_field.height));
+
     auto it = m_entities.begin();
     while (it != m_entities.end())
     {
@@ -47,6 +49,8 @@ void Main::update(float dt)
             continue;
         }
 
+        m_quadtree->insert(entity);
+
         it++;
     }
 }
@@ -58,6 +62,9 @@ void Main::draw(yoku::Window &window)
     {
         window.draw(e->getDrawable());
     }
+
+    if (m_quadtree != nullptr)
+        m_quadtree->draw(window);
 }
 
 void Main::addEntity(const sf::Vector2i &pos)
