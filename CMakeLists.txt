@@ -23,6 +23,7 @@ set(YOKU_LIB_SOURCES
   src/SceneManager.cpp
   src/Window.cpp
   src/Game.cpp
+  src/Input.cpp
   src/rng.cpp
   )
   set(YOKU_LIBRARY_NAME yoku)

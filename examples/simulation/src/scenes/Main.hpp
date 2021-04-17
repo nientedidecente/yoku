@@ -3,6 +3,7 @@
 
 #include "Scene.hpp"
 #include "SceneManager.hpp"
+#include "Input.hpp"
 
 #include "../entities/Entity.hpp"
 #include "../libs/Quadtree.hpp"
@@ -18,6 +19,7 @@ private:
     std::vector<std::shared_ptr<Entity>> m_entities;
 
     sf::RectangleShape m_highlight;
+    yoku::Input m_input;
 
     float m_inputlag = 0;
 
@@ -25,7 +27,8 @@ public:
     Main(yoku::Window &window)
         : Scene("main"), m_window(window),
           m_field(0, 0, window.getWidth(), window.getHeight()),
-          m_highlight(sf::Vector2f(100, 100))
+          m_highlight(sf::Vector2f(100, 100)),
+          m_input({sf::Keyboard::D})
     {
         m_highlight.setOutlineColor(sf::Color::Green);
         m_highlight.setOutlineThickness(1.f);

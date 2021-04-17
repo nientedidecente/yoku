@@ -9,31 +9,22 @@ void Main::processInput(float dt)
 {
     auto pos = m_window.getMousePosition();
     m_highlight.setPosition(pos.x, pos.y);
+    m_input.update();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && m_entities.size() > 0)
+    if (m_input.wasKeyPressed(sf::Keyboard::D) && m_entities.size() > 0)
     {
-        m_inputlag += dt;
-        if (m_inputlag >= .1f)
-        {
-            m_entities.pop_back();
-            m_inputlag = 0;
-        }
+        m_entities.pop_back();
     }
 
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (m_input.wasMouseClicked())
     {
-        m_inputlag += dt;
-        if (m_inputlag >= .1f)
-        {
-            addEntity(pos);
-            m_inputlag = 0;
-        }
+        addEntity(pos);
     }
 }
 
 void Main::update(float dt)
 {
-    Timer timer("update");
+    //Timer timer("update");
     if (m_quadtree == nullptr)
     {
         m_quadtree = std::make_unique<Quadtree>(4, sf::FloatRect(0, 0, m_field.width, m_field.height));
@@ -66,7 +57,7 @@ void Main::update(float dt)
 
 void Main::draw(yoku::Window &window)
 {
-    std::cout << "ents: " << m_entities.size() << '\n';
+    //std::cout << "ents: " << m_entities.size() << '\n';
     for (auto &e : m_entities)
     {
         window.draw(e->getDrawable());
