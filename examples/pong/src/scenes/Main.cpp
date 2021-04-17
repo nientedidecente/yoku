@@ -33,11 +33,7 @@ void Main::onCreate()
     m_Entities[2] = m_CpuPaddle;
 }
 
-void Main::onDestroy()
-{
-}
-
-void Main::processInput()
+void Main::processInput(float dt)
 {
     for (auto &e : m_Entities)
     {

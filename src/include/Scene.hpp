@@ -24,7 +24,7 @@ namespace yoku
         virtual void onDeactivate() { isActive = false; };
 
         virtual void processEvent(sf::Event &event){};
-        virtual void processInput(){};
+        virtual void processInput(float dt){};
         virtual void update(float dt){};
         virtual void draw(Window &window){};
     };

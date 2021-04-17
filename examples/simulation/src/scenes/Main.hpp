@@ -19,6 +19,8 @@ private:
 
     sf::RectangleShape m_highlight;
 
+    float m_inputlag = 0;
+
 public:
     Main(yoku::Window &window)
         : Scene("main"), m_window(window),
@@ -31,11 +33,9 @@ public:
         auto bounds = m_highlight.getLocalBounds();
         m_highlight.setOrigin(bounds.width / 2, bounds.height / 2);
     }
-    void onCreate() override;
-    void onDestroy() override;
-
-    void processEvent(sf::Event &event) override;
-    void processInput() override;
+    void onCreate() override {}
+    void onDestroy() override {}
+    void processInput(float dt) override;
 
     void update(float dt) override;
     void draw(yoku::Window &window) override;

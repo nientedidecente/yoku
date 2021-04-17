@@ -5,42 +5,35 @@
 
 #include <iostream>
 
-void Main::onCreate()
-{
-}
-
-void Main::onDestroy()
-{
-}
-
-void Main::processEvent(sf::Event &event)
-{
-
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
-    {
-        auto pos = m_window.getMousePosition();
-        addEntity(pos);
-        return;
-    }
-
-    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
-    {
-        if (m_entities.size() > 0)
-        {
-            m_entities.pop_back();
-        }
-    }
-}
-void Main::processInput()
+void Main::processInput(float dt)
 {
     auto pos = m_window.getMousePosition();
     m_highlight.setPosition(pos.x, pos.y);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && m_entities.size() > 0)
+    {
+        m_inputlag += dt;
+        if (m_inputlag >= .1f)
+        {
+            m_entities.pop_back();
+            m_inputlag = 0;
+        }
+    }
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        m_inputlag += dt;
+        if (m_inputlag >= .1f)
+        {
+            addEntity(pos);
+            m_inputlag = 0;
+        }
+    }
 }
 
 void Main::update(float dt)
 {
     Timer timer("update");
-    // with 18 entities without clear: 0.067 - 0.099
     if (m_quadtree == nullptr)
     {
         m_quadtree = std::make_unique<Quadtree>(4, sf::FloatRect(0, 0, m_field.width, m_field.height));

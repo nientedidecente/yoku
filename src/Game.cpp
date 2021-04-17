@@ -21,7 +21,7 @@ namespace yoku
             if (scene != nullptr)
             {
                 scene->processEvent(event);
-                scene->processInput();
+                scene->processInput(dt);
                 scene->update(dt);
                 m_Window.startDraw();
                 scene->draw(m_Window);
