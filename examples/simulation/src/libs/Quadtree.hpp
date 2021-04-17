@@ -8,6 +8,9 @@
 #include <vector>
 #include <memory>
 
+using vecOfEntities = std::vector<std::shared_ptr<Entity>>;
+using vecOfEntitiesPtr = std::shared_ptr<vecOfEntities>;
+
 class Quadtree
 {
 private:
@@ -22,7 +25,9 @@ private:
 public:
     Quadtree(const int maxElements, const sf::FloatRect bounds) : m_maxElements(maxElements), m_boundaries(bounds) {}
     bool insert(const std::shared_ptr<Entity> &entity);
-    std::vector<std::shared_ptr<Entity>> &entitiesIn(const sf::FloatRect &bounds);
+    vecOfEntitiesPtr entitiesIn(const sf::FloatRect &bounds, vecOfEntitiesPtr results = nullptr);
 
     void draw(yoku::Window &window);
+
+    void clear();
 };

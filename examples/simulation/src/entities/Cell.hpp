@@ -35,4 +35,6 @@ public:
     sf::Drawable &getDrawable() const override { return *m_shape; }
 
     void update(float dt) override;
+
+    void setHighlight(bool value) override;
 };

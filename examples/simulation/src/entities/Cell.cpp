@@ -15,8 +15,15 @@ Cell::Cell(sf::Vector2i pos, sf::IntRect &field) : m_field(field)
 
 Cell::~Cell()
 {
+    /*
     auto position = m_shape->getPosition();
     std::cout << "Destroying cell at: " << position.x << "  ,  " << position.y << '\n';
+    */
+}
+
+void Cell::setHighlight(bool value)
+{
+    m_shape->setFillColor(value ? sf::Color::Green : sf::Color::White);
 }
 
 void Cell::update(float dt)

@@ -30,7 +30,7 @@ set(YOKU_LIB_SOURCES
   add_library(${YOKU_LIBRARY_NAME} SHARED ${YOKU_LIB_SOURCES})
   file(COPY src/include DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-#add_compile_definitions(FPS=1)
+add_compile_definitions(FPS=1)
 message("Build Type: " ${CMAKE_BUILD_TYPE})
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_compile_definitions(DEBUG)

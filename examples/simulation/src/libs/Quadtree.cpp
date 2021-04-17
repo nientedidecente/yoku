@@ -1,6 +1,7 @@
 #include "Quadtree.hpp"
 #include <iostream>
 
+// TODO: move this to an helpers header on yoku maybe
 std::ostream &operator<<(std::ostream &o, const sf::FloatRect &r)
 {
     o << "x: " << r.top << " y: " << r.left << " | w: " << r.width << " h: " << r.height << '\n';
@@ -28,17 +29,13 @@ bool Quadtree::insert(const std::shared_ptr<Entity> &entity)
         split();
     }
 
-    if (m_subquads[0]->insert(entity))
-        return true;
-
-    if (m_subquads[1]->insert(entity))
-        return true;
-
-    if (m_subquads[2]->insert(entity))
-        return true;
-
-    if (m_subquads[3]->insert(entity))
-        return true;
+    for (auto &subquad : m_subquads)
+    {
+        if (subquad->insert(entity))
+        {
+            return true;
+        }
+    }
 
     // not able to insert anywhere,
     //this should never happen
@@ -79,8 +76,57 @@ void Quadtree::draw(yoku::Window &window)
     if (!m_split)
         return;
 
-    m_subquads[0]->draw(window);
-    m_subquads[1]->draw(window);
-    m_subquads[2]->draw(window);
-    m_subquads[3]->draw(window);
+    for (auto &subquad : m_subquads)
+    {
+        subquad->draw(window);
+    }
+}
+
+void Quadtree::clear()
+{
+    m_entities.clear();
+    if (!m_split)
+        return;
+
+    for (auto &subquad : m_subquads)
+    {
+        subquad->clear();
+    }
+
+    std::fill(m_subquads.begin(), m_subquads.end(), nullptr);
+    m_split = false;
+}
+
+vecOfEntitiesPtr Quadtree::entitiesIn(const sf::FloatRect &bounds, vecOfEntitiesPtr results)
+{
+    if (results == nullptr)
+    {
+        results = std::make_shared<vecOfEntities>();
+    }
+
+    std::vector<std::shared_ptr<Entity>> result;
+    if (!m_boundaries.intersects(bounds))
+    {
+        return results;
+    }
+
+    for (auto &entity : m_entities)
+    {
+        if (bounds.intersects(entity->getBounds()))
+        {
+            results->emplace_back(entity);
+        }
+    }
+
+    if (!m_split)
+    {
+        return results;
+    }
+
+    for (auto &subquad : m_subquads)
+    {
+        subquad->entitiesIn(bounds, results);
+    }
+
+    return results;
 }

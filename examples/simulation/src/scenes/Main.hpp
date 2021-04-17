@@ -17,10 +17,20 @@ private:
     std::unique_ptr<Quadtree> m_quadtree = nullptr;
     std::vector<std::shared_ptr<Entity>> m_entities;
 
+    sf::RectangleShape m_highlight;
+
 public:
     Main(yoku::Window &window)
         : Scene("main"), m_window(window),
-          m_field(0, 0, window.getWidth(), window.getHeight()) {}
+          m_field(0, 0, window.getWidth(), window.getHeight()),
+          m_highlight(sf::Vector2f(100, 100))
+    {
+        m_highlight.setOutlineColor(sf::Color::Green);
+        m_highlight.setOutlineThickness(1.f);
+        m_highlight.setFillColor(sf::Color::Transparent);
+        auto bounds = m_highlight.getLocalBounds();
+        m_highlight.setOrigin(bounds.width / 2, bounds.height / 2);
+    }
     void onCreate() override;
     void onDestroy() override;
 
