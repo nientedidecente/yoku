@@ -24,13 +24,12 @@ private:
     sf::Vector2i m_direction = {0, 0};
 
 public:
-    int size = 10;
     Cell(const int id, sf::Vector2i pos, sf::IntRect &field);
-    ~Cell();
 
     sf::Vector2f getPosition() const override { return m_shape->getPosition(); }
     sf::FloatRect getBounds() const override { return m_shape->getGlobalBounds(); }
 
+    void setActive(bool value) override { m_isDead = !value; }
     bool isActive() const override { return !m_isDead; }
     sf::Drawable &getDrawable() const override { return *m_shape; }
 

@@ -5,8 +5,9 @@
 
 #include <iostream>
 
-Cell::Cell(const int id, sf::Vector2i pos, sf::IntRect &field) : Entity(id, Types::Entity::Cell), m_field(field)
+Cell::Cell(const int id, sf::Vector2i pos, sf::IntRect &field) : Entity(id, Types::Cell), m_field(field)
 {
+    size = 10;
     m_shape = std::make_unique<sf::CircleShape>(size);
     m_shape->setPosition(float(pos.x), float(pos.y));
     m_shape->setFillColor(sf::Color::White);
@@ -18,16 +19,15 @@ void Cell::checkCollision(Entity &other)
 {
     if (getBounds().intersects(other.getBounds()))
     {
-        m_shape->setFillColor(sf::Color::Red);
+        if (other.getType() == Types::Cell)
+        {
+            m_shape->setFillColor(sf::Color::Red);
+            if (yoku::rng::chance(.5f + (.1f * (size - other.size))))
+                other.setActive(false);
+            else
+                setActive(false);
+        }
     }
-}
-
-Cell::~Cell()
-{
-    /*
-    auto position = m_shape->getPosition();
-    std::cout << "Destroying cell at: " << position.x << "  ,  " << position.y << '\n';
-    */
 }
 
 void Cell::setHighlight(bool value)

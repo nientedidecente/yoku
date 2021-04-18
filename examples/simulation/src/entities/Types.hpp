@@ -1,9 +1,5 @@
 #pragma once
-class Types
+enum class Types
 {
-public:
-    enum Entity
-    {
-        Cell
-    };
+    Cell
 };

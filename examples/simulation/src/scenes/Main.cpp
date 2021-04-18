@@ -59,11 +59,11 @@ void Main::update(float dt)
         auto possibleCollisions = m_quadtree->entitiesIn(e->getBounds());
         for (auto &colliding : *possibleCollisions)
         {
-            if (e->getId() == colliding->getId())
+            if (e->getId() == colliding->getId() || (!e->isActive() || !colliding->isActive()))
             {
                 continue;
             }
-            
+
             e->checkCollision(*colliding);
         }
     }
