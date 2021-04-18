@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-Cell::Cell(const int id, sf::Vector2i pos, sf::IntRect &field) : Entity(id, Types::Cell), m_field(field)
+Cell::Cell(const std::string &id, sf::Vector2i pos, sf::IntRect &field) : Entity(id, Types::Cell), m_field(field)
 {
     size = 10;
     m_shape = std::make_unique<sf::CircleShape>(size);
@@ -49,27 +49,26 @@ void Cell::update(float dt)
         m_satiety -= .1f;
         if (m_satiety <= 0)
         {
-            std::cout << "Starving!!\n";
+            std::cout << "id: " << getId() << " : Starving!!\n";
             m_satiety = 0.f;
         }
 
         if (isInside)
         {
-            m_direction = yoku::rng::chance(0.5f) ? sf::Vector2i(1, 1) : sf::Vector2i(1, -1);
-            m_direction = yoku::rng::chance(0.5f) ? sf::Vector2i(-1, -1) : sf::Vector2i(-1, 1);
+            m_direction.x = (yoku::rng::chance(.5f) ? -1 : 1) * yoku::rng::integer(1, 10) / 10.f;
+            m_direction.y = (yoku::rng::chance(.5f) ? -1 : 1) * yoku::rng::integer(1, 10) / 10.f;
         }
-        m_lastDecisionTimeout = 0;
-    }
 
-    if (m_satiety <= 0 || !isInside)
-    {
-        std::cout << "Losing life\n";
-        m_life -= 0.1f;
+        if (m_satiety <= 0 || !isInside)
+        {
+            m_life -= 0.1f;
+        }
+
+        m_lastDecisionTimeout = 0;
     }
 
     if (m_life <= 0)
     {
-        std::cout << "I deeeeed!\n";
         m_isDead = true;
     }
 
@@ -83,7 +82,6 @@ void Cell::update(float dt)
     bool directionChangeTimedOut = m_directionTimeout >= DIRECTION_TIMEOUT;
     if (!isInside && directionChangeTimedOut)
     {
-        std::cout << "Changing direction\n";
         m_directionTimeout = 0;
         if (yoku::rng::chance(0.5f))
             m_direction.x *= -1;

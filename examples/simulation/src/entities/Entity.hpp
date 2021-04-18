@@ -7,12 +7,12 @@ class Entity
 {
 protected:
     Types m_type;
-    int m_id;
+    std::string m_id;
 
 public:
     int size = 0;
-    Entity(const int id, Types type) : m_id(id), m_type(type) {}
-    int getId() const { return m_id; }
+    Entity(const std::string &id, Types type) : m_id(id), m_type(type) {}
+    std::string getId() const { return m_id; }
     Types getType() const { return m_type; }
     virtual sf::Vector2f getPosition() const = 0;
     virtual sf::FloatRect getBounds() const = 0;

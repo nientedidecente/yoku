@@ -21,10 +21,10 @@ private:
 
     int m_speed = 20;
 
-    sf::Vector2i m_direction = {0, 0};
+    sf::Vector2f m_direction = {0.f, 0.f};
 
 public:
-    Cell(const int id, sf::Vector2i pos, sf::IntRect &field);
+    Cell(const std::string &id, sf::Vector2i pos, sf::IntRect &field);
 
     sf::Vector2f getPosition() const override { return m_shape->getPosition(); }
     sf::FloatRect getBounds() const override { return m_shape->getGlobalBounds(); }
