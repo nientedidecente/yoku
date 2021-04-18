@@ -53,6 +53,20 @@ void Main::update(float dt)
     {
         e->setHighlight(true);
     }
+
+    for (auto &e : m_entities)
+    {
+        auto possibleCollisions = m_quadtree->entitiesIn(e->getBounds());
+        for (auto &colliding : *possibleCollisions)
+        {
+            if (e->getId() == colliding->getId())
+            {
+                continue;
+            }
+            
+            e->checkCollision(*colliding);
+        }
+    }
 }
 
 void Main::draw(yoku::Window &window)
@@ -74,6 +88,8 @@ void Main::draw(yoku::Window &window)
 
 void Main::addEntity(const sf::Vector2i &pos)
 {
-    auto ent = std::make_shared<Cell>(pos, m_field);
+    auto id = m_entities.size() + 1;
+    auto ent = std::make_shared<Cell>(id, pos, m_field);
+
     m_entities.emplace_back(ent);
 }

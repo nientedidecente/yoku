@@ -25,7 +25,7 @@ private:
 
 public:
     int size = 10;
-    Cell(sf::Vector2i pos, sf::IntRect &field);
+    Cell(const int id, sf::Vector2i pos, sf::IntRect &field);
     ~Cell();
 
     sf::Vector2f getPosition() const override { return m_shape->getPosition(); }
@@ -35,6 +35,7 @@ public:
     sf::Drawable &getDrawable() const override { return *m_shape; }
 
     void update(float dt) override;
+    void checkCollision(Entity &other) override;
 
     void setHighlight(bool value) override;
 };

@@ -1,16 +1,25 @@
 #include "Cell.hpp"
+#include "Types.hpp"
 
 #include "rng.hpp"
 
 #include <iostream>
 
-Cell::Cell(sf::Vector2i pos, sf::IntRect &field) : m_field(field)
+Cell::Cell(const int id, sf::Vector2i pos, sf::IntRect &field) : Entity(id, Types::Entity::Cell), m_field(field)
 {
     m_shape = std::make_unique<sf::CircleShape>(size);
     m_shape->setPosition(float(pos.x), float(pos.y));
     m_shape->setFillColor(sf::Color::White);
     auto bounds = m_shape->getLocalBounds();
     m_shape->setOrigin(bounds.width / 2, bounds.width / 2);
+}
+
+void Cell::checkCollision(Entity &other)
+{
+    if (getBounds().intersects(other.getBounds()))
+    {
+        m_shape->setFillColor(sf::Color::Red);
+    }
 }
 
 Cell::~Cell()
@@ -28,9 +37,6 @@ void Cell::setHighlight(bool value)
 
 void Cell::update(float dt)
 {
-    //testing
-    return;
-
     if (m_isDead)
         return;
 
