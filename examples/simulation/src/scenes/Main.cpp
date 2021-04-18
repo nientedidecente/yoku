@@ -1,9 +1,19 @@
+#include "rng.hpp"
+
 #include "Main.hpp"
 
 #include "../entities/Cell.hpp"
 #include "../libs/Timer.hpp"
 
 #include <iostream>
+
+void Main::onActivate()
+{
+    auto font = yoku::Assets::getInstance()->loadFont("callingcode");
+    m_info.setFont(*font);
+    m_info.setPosition(10, 10);
+    m_info.setCharacterSize(15);
+}
 
 void Main::processInput(float dt)
 {
@@ -24,7 +34,7 @@ void Main::processInput(float dt)
 
 void Main::update(float dt)
 {
-    //Timer timer("update");
+    m_info.setString("Entities: " + std::to_string(m_entities.size()));
     if (m_quadtree == nullptr)
     {
         m_quadtree = std::make_unique<Quadtree>(4, sf::FloatRect(0, 0, m_field.width, m_field.height));
@@ -71,7 +81,7 @@ void Main::update(float dt)
 
 void Main::draw(yoku::Window &window)
 {
-    //std::cout << "ents: " << m_entities.size() << '\n';
+    window.draw(m_info);
     for (auto &e : m_entities)
     {
         window.draw(e->getDrawable());
@@ -88,7 +98,8 @@ void Main::draw(yoku::Window &window)
 
 void Main::addEntity(const sf::Vector2i &pos)
 {
-    auto id = m_entities.size() + 1;
+    auto index = m_entities.size() + 1;
+    auto id = yoku::rng::str(5) + "_" + std::to_string(index);
     auto ent = std::make_shared<Cell>(id, pos, m_field);
 
     m_entities.emplace_back(ent);

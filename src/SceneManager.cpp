@@ -16,6 +16,7 @@ namespace yoku
         {
             m_CurrentScene = scene;
             scene->onActivate();
+            scene->activate();
         }
 
         m_Scenes.insert(std::make_pair(scene->getName(), scene));
@@ -36,9 +37,12 @@ namespace yoku
         }
 
         m_CurrentScene->onDeactivate();
+        m_CurrentScene->deactivate();
+
         auto scene = found->second;
         m_CurrentScene = scene;
         scene->onActivate();
+        scene->activate();
     }
 
     std::shared_ptr<Scene> SceneManager::getCurrent()

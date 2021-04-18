@@ -2,7 +2,6 @@
 
 #include "Assets.hpp"
 
-void Splash::onDestroy() {}
 void Splash::onCreate()
 {
     auto font = yoku::Assets::getInstance()->loadFont("callingcode");

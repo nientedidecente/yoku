@@ -16,7 +16,6 @@ public:
     Splash(yoku::SceneManager &sm) : Scene("splash"), m_SM(sm) {}
 
     void onCreate() override;
-    void onDestroy() override;
     void processEvent(sf::Event &event) override;
     void draw(yoku::Window &window) override;
 };
