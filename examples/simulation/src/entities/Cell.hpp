@@ -9,6 +9,7 @@ class Cell : public Entity
 private:
     sf::IntRect &m_field;
     std::unique_ptr<sf::CircleShape> m_shape;
+    sf::Color m_baseColour = sf::Color::White;
     bool m_isDead = false;
     const float UPDATE_TIME = 4.f;
     const float DIRECTION_TIMEOUT = 1.5f;
@@ -35,6 +36,7 @@ public:
 
     void update(float dt) override;
     void checkCollision(Entity &other) override;
-
     void setHighlight(bool value) override;
+
+    void grow();
 };

@@ -10,7 +10,7 @@ Cell::Cell(const std::string &id, sf::Vector2i pos, sf::IntRect &field) : Entity
     size = 10;
     m_shape = std::make_unique<sf::CircleShape>(size);
     m_shape->setPosition(float(pos.x), float(pos.y));
-    m_shape->setFillColor(sf::Color::White);
+    m_shape->setFillColor(m_baseColour);
     auto bounds = m_shape->getLocalBounds();
     m_shape->setOrigin(bounds.width / 2, bounds.width / 2);
 }
@@ -27,12 +27,20 @@ void Cell::checkCollision(Entity &other)
             else
                 setActive(false);
         }
+
+        if (other.getType() == Types::Food)
+        {
+            other.setActive(false);
+            m_satiety = 1;
+            m_baseColour = sf::Color::White;
+            grow();
+        }
     }
 }
 
 void Cell::setHighlight(bool value)
 {
-    m_shape->setFillColor(value ? sf::Color::Green : sf::Color::White);
+    m_shape->setFillColor(value ? sf::Color::Green : m_baseColour);
 }
 
 void Cell::update(float dt)
@@ -49,7 +57,7 @@ void Cell::update(float dt)
         m_satiety -= .1f;
         if (m_satiety <= 0)
         {
-            std::cout << "id: " << getId() << " : Starving!!\n";
+            m_baseColour = sf::Color::Yellow;
             m_satiety = 0.f;
         }
 
@@ -83,11 +91,20 @@ void Cell::update(float dt)
     if (!isInside && directionChangeTimedOut)
     {
         m_directionTimeout = 0;
-        if (yoku::rng::chance(0.5f))
-            m_direction.x *= -1;
-        else
-            m_direction.y *= -1;
-
-        m_shape->setPosition(pos.x + (m_speed * m_direction.x * dt), pos.y + (m_speed * m_direction.y * dt));
+        m_direction.x *= -1;
+        m_direction.y *= -1;
+        auto bounceSpeed = m_speed + 5;
+        m_shape->setPosition(pos.x + (bounceSpeed * m_direction.x * dt), pos.y + (bounceSpeed * m_direction.y * dt));
     }
+}
+
+void Cell::grow()
+{
+    size += 5;
+    auto currentPosition = getPosition();
+    m_shape = std::make_unique<sf::CircleShape>(size);
+    auto bounds = m_shape->getLocalBounds();
+    m_shape->setOrigin(bounds.width / 2, bounds.width / 2);
+    m_shape->setPosition(currentPosition);
+    m_shape->setFillColor(m_baseColour);
 }
