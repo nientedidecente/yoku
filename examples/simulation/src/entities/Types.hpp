@@ -1,5 +1,6 @@
 #pragma once
 enum class Types
 {
-    Cell
+    Cell,
+    Food
 };

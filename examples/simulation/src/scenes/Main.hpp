@@ -26,18 +26,7 @@ private:
     float m_inputlag = 0;
 
 public:
-    Main(yoku::Window &window)
-        : Scene("main"), m_window(window),
-          m_field(0, 0, window.getWidth(), window.getHeight()),
-          m_highlight(sf::Vector2f(100, 100)),
-          m_input({sf::Keyboard::D})
-    {
-        m_highlight.setOutlineColor(sf::Color::Green);
-        m_highlight.setOutlineThickness(1.f);
-        m_highlight.setFillColor(sf::Color::Transparent);
-        auto bounds = m_highlight.getLocalBounds();
-        m_highlight.setOrigin(bounds.width / 2, bounds.height / 2);
-    }
+    Main(yoku::Window &window);
     void onCreate() override {}
     void onDestroy() override {}
     void onActivate() override;

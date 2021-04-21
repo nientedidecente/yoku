@@ -3,9 +3,23 @@
 #include "Main.hpp"
 
 #include "../entities/Cell.hpp"
+#include "../entities/Food.hpp"
 #include "../libs/Timer.hpp"
 
 #include <iostream>
+
+Main::Main(yoku::Window &window)
+    : Scene("main"), m_window(window),
+      m_field(0, 0, window.getWidth(), window.getHeight()),
+      m_highlight(sf::Vector2f(100, 100)),
+      m_input({sf::Keyboard::D, sf::Keyboard::F})
+{
+    m_highlight.setOutlineColor(sf::Color::Green);
+    m_highlight.setOutlineThickness(1.f);
+    m_highlight.setFillColor(sf::Color::Transparent);
+    auto bounds = m_highlight.getLocalBounds();
+    m_highlight.setOrigin(bounds.width / 2, bounds.height / 2);
+}
 
 void Main::onActivate()
 {
@@ -29,6 +43,13 @@ void Main::processInput(float dt)
     if (m_input.wasMouseClicked())
     {
         addEntity(pos);
+    }
+
+    if (m_input.wasKeyPressed(sf::Keyboard::F))
+    {
+        auto id = yoku::rng::str(5) + "_Food";
+        auto food = std::make_shared<Food>(id, m_field);
+        m_entities.emplace_back(food);
     }
 }
 
